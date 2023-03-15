@@ -29,7 +29,7 @@ def post_data():
     image_data = data.get('image', '')
     # base64 문자열로부터 이미지 데이터를 복원합니다.
     image_64 = base64.b64decode(image_data.split(',')[1])
-    with open('Flask-server/image/canvas_image.png', 'wb') as f:
+    with open('flask-server/image/canvas_image.png', 'wb') as f:
         f.write(image_64)
 
     image = cv2.imread('flask-server/image/canvas_image.png', cv2.IMREAD_UNCHANGED)
