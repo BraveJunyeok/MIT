@@ -31,7 +31,7 @@ def post_data():
     image_64 = base64.b64decode(image_data.split(',')[1])
   
 
-    image = cv2.imread('home/ubuntu/MIT/flask-server/image/canvas_image.png', cv2.IMREAD_UNCHANGED)
+    image = cv2.imread('MIT/flask-server/image/canvas_image.png', cv2.IMREAD_UNCHANGED)
     _, _, _, alpha = cv2.split(image)
     image_gray = alpha
 
@@ -51,9 +51,9 @@ def post_data():
 
 
     if torch.cuda.is_available():
-        model = torch.load("home/ubuntu/MIT/flask-server/src/whole_model_quickdraw.txt")
+        model = torch.load("MIT/flask-server/src/whole_model_quickdraw.txt")
     else:
-        model = torch.load("home/ubuntu/MIT/flask-server/src/whole_model_quickdraw.txt", map_location=lambda storage, loc: storage)
+        model = torch.load("MIT/flask-server/src/whole_model_quickdraw.txt", map_location=lambda storage, loc: storage)
     model.eval()
 
     with torch.no_grad():
