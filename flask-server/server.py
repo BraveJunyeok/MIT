@@ -29,20 +29,11 @@ def post_data():
     image_data = data.get('image', '')
     # base64 문자열로부터 이미지 데이터를 복원합니다.
     image_64 = base64.b64decode(image_data.split(',')[1])
-    with open('flask-server/image/canvas_image.png', 'wb') as f:
-        f.write(image_64)
+  
 
-    image = cv2.imread('flask-server/image/canvas_image.png', cv2.IMREAD_UNCHANGED)
+    image = cv2.imread('home/ubuntu/MIT/flask-server/image/canvas_image.png', cv2.IMREAD_UNCHANGED)
     _, _, _, alpha = cv2.split(image)
     image_gray = alpha
-    
-    # PIL Image로 변환합니다.
-    pil_image = Image.fromarray(image)
-    # 이미지를 저장할 파일 경로와 파일 이름을 지정합니다.
-    save_path = 'flask-server/image/new_gray_image12345.png'
-    # 이미지를 저장합니다.
-    pil_image.save(save_path)
-
 
     # 여기서 부터 모델 코드 ------------------------------------------------------
     # 이미지를 28*28 크기로 조정합니다.
@@ -60,9 +51,9 @@ def post_data():
 
 
     if torch.cuda.is_available():
-        model = torch.load("flask-server/src/whole_model_quickdraw.txt")
+        model = torch.load("home/ubuntu/MIT/flask-server/src/whole_model_quickdraw.txt")
     else:
-        model = torch.load("flask-server/src/whole_model_quickdraw.txt", map_location=lambda storage, loc: storage)
+        model = torch.load("home/ubuntu/MIT/flask-server/src/whole_model_quickdraw.txt", map_location=lambda storage, loc: storage)
     model.eval()
 
     with torch.no_grad():
@@ -70,27 +61,6 @@ def post_data():
         pred = torch.argmax(logits, dim=1).item()
         pred_class = CLASSES[pred]
         pred_class_kr = class_dict.get(pred_class, '알 수 없는 객체')  # 클래스 이름을 한글로 변환합니다.
-
-        # dall-e api 가져오는 코드
-        openai.api_key = "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"
-        openai.Model.list()
-        response = openai.Image.create(
-            prompt=f"Cute fairy tale with {pred_class}",
-            n=4,
-            size = "256x256"
-        )
-
-        
-        if response and response.data and response.data[0].url:
-            url = response.data[0].url
-            image_data = requests.get(url).content
-            
-            # 이미지를 저장할 파일 경로와 파일 이름을 지정합니다.
-            save_path = 'flask-server/image/new_image.png'
-            
-            # 이미지를 파일로 저장합니다.
-            with open(save_path, 'wb') as f:
-                f.write(image_data)
 
     print(pred_class,pred_class_kr)
     return {"prediction": pred_class_kr}
