@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import openai
 import requests
 
@@ -11,10 +11,9 @@ import torch
 import base64
 from PIL import Image
 
-app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-
 CORS(app)
+app = Flask(__name__)
+
 class_dict = {'apple': '사과', 'book': '책', 'bowtie': '보타이', 'candle': '촛대', 'cloud': '구름', 'cup': '컵',
 'door': '문', 'envelope': '봉투', 'eyeglasses': '안경', 'guitar': '기타', 'hammer': '망치', 'hat': '모자',
 'ice cream': '아이스크림', 'leaf': '나뭇잎', 'scissors': '가위', 'star': '별', 't-shirt': '티셔츠',
