@@ -156,4 +156,4 @@ def get_voice():
     return send_file("/Users/kijun/Desktop/react_project/flask-server/image/1111.mp3", mimetype='audio/mpeg') 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3525, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
