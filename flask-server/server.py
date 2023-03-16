@@ -36,7 +36,7 @@ def post_data():
     # base64 문자열로부터 이미지 데이터를 복원합니다.
     image_64 = base64.b64decode(image_data.split(',')[1])
     image_array = np.frombuffer(image_64, np.uint8)
-    with open('/Users/kijun/Desktop/react_project/flask-server/image/canvas_image.png', 'wb') as f:
+    with open('/MIT/flask-server/image/canvas_image.png', 'wb') as f:
         f.write(image_64)
 
     image = cv2.imdecode(image_array, cv2.IMREAD_UNCHANGED)
@@ -67,9 +67,9 @@ def post_data():
 
 
     if torch.cuda.is_available():
-        model = torch.load("/Users/kijun/Desktop/react_project/flask-server/src/whole_model_quickdraw.txt")
+        model = torch.load("/MIT/flask-server/src/whole_model_quickdraw.txt")
     else:
-        model = torch.load("/Users/kijun/Desktop/react_project/flask-server/src/whole_model_quickdraw.txt", map_location=lambda storage, loc: storage)
+        model = torch.load("/MIT/flask-server/src/whole_model_quickdraw.txt", map_location=lambda storage, loc: storage)
     model.eval()
 
     with torch.no_grad():
@@ -123,7 +123,7 @@ def get_data():
             image_io = io.BytesIO(image_data)
             
             # 이미지를 저장할 파일 경로와 파일 이름을 지정합니다.
-            save_path = '/Users/kijun/Desktop/react_project/flask-server/image/new_image.png'
+            save_path = '/MIT/flask-server/image/new_image.png'
             
             # 이미지를 파일로 저장합니다.
             with open(save_path, 'wb') as f:
@@ -148,12 +148,12 @@ def get_voice():
     if(rescode==200):
         print("TTS mp3 저장")
         response_body = response.read()
-        with open('/Users/kijun/Desktop/react_project/flask-server/image/1111.mp3', 'wb') as f:
+        with open('/MIT/flask-server/image/1111.mp3', 'wb') as f:
             f.write(response_body)
     else:
         print("Error Code:" + rescode)
 
-    return send_file("/Users/kijun/Desktop/react_project/flask-server/image/1111.mp3", mimetype='audio/mpeg') 
+    return send_file("/MIT/flask-server/image/1111.mp3", mimetype='audio/mpeg') 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
